@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 import db_utils
 import time
+import json
 
 st.set_page_config(page_title="Dashboard Quản trị Nâng cao", layout="wide")
 
@@ -106,15 +107,25 @@ else:
         with tab1:
             st.dataframe(df.drop(columns=['image_base64'], errors='ignore'), use_container_width=True)
             
-            # TÍNH NĂNG XUẤT FILE CSV
-            csv = df.to_csv(index=False).encode('utf-8')
-            st.download_button(
-                label="📥 Tải xuống dữ liệu (CSV)",
-                data=csv,
-                file_name='DuLieu_SuCo_GIS.csv',
-                mime='text/csv',
-                type="primary"
-            )
+            col_dl1, col_dl2 = st.columns(2)
+            with col_dl1:
+                # NÚT XUẤT CSV CŨ
+                csv = df.to_csv(index=False).encode('utf-8')
+                st.download_button("📥 Tải xuống (CSV)", data=csv, file_name='DuLieu.csv', mime='text/csv', type="primary", use_container_width=True)
+            
+            with col_dl2:
+                # TÍNH NĂNG MỚI: XUẤT GEOJSON CHUẨN GIS
+                geojson = {
+                    "type": "FeatureCollection",
+                    "features": [
+                        {
+                            "type": "Feature",
+                            "geometry": {"type": "Point", "coordinates": [row['lon'], row['lat']]},
+                            "properties": {k: str(v) for k, v in row.items() if k != 'image_base64'}
+                        } for _, row in df.iterrows()
+                    ]
+                }
+                st.download_button("🌍 Tải xuống Không gian (GeoJSON)", data=json.dumps(geojson), file_name='DuLieu_GIS.geojson', mime='application/geo+json', type="primary", use_container_width=True)
 
         with tab2:
             if df.empty:
