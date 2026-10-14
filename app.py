@@ -88,7 +88,7 @@ def get_environmental_data(lat, lon):
 def get_address(lat, lon):
     try:
         url = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}&zoom=18&addressdetails=1"
-        headers = {'User-Agent': 'GIS_Incident_App/1.0'}
+        headers = {'User-Agent': 'VIMAPS_StudentProject/1.0'}
         response = requests.get(url, headers=headers).json()
         return response.get('display_name', 'Không xác định được địa chỉ')
     except Exception as e:
