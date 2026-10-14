@@ -141,20 +141,20 @@ else:
                                 st.success("Trạng thái: Đã xử lý")
                             
                             # Các nút thao tác (Nằm trên cùng 1 hàng)
-                            btn_col1, btn_col2 = st.columns(2)
+                            btn_col1, btn_col2, btn_col3 = st.columns(3)
                             with btn_col1:
                                 if row['status'] == 'pending':
                                     if st.button("✅ Duyệt", key=f"resolve_{row['id']}"):
                                         db_utils.update_status(row['id'], "resolved")
-                                        st.toast(f"Đã duyệt sự cố ID {row['id']}!", icon="✅")
-                                        time.sleep(1)
                                         st.rerun()
                             with btn_col2:
                                 if st.button("🗑️ Xóa", key=f"del_{row['id']}"):
                                     db_utils.delete_report(row['id'])
-                                    st.toast(f"Đã xóa báo cáo ID {row['id']}!", icon="🗑️")
-                                    time.sleep(1)
                                     st.rerun()
+                            with btn_col3:
+                                # TÍNH NĂNG MỚI: CHỈ ĐƯỜNG GOOGLE MAPS
+                                maps_url = f"https://www.google.com/maps/dir/?api=1&destination={row['lat']},{row['lon']}"
+                                st.link_button("🗺️ Chỉ đường", maps_url)
                                     
         # Khu vực cực kỳ nguy hiểm (Xóa toàn bộ)
         st.markdown("<br><br>", unsafe_allow_html=True)
