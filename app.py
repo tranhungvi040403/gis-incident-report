@@ -94,7 +94,7 @@ def get_address(lat, lon):
     except Exception as e:
         return "Không thể tải địa chỉ"
 
-st.title("🗺️ Hệ thống Cảnh báo Sự cố & Giám sát Môi trường")
+st.title("🗺️ Nền tảng Cảnh báo & Giám sát cho Thành phố thông minh (ViMAPS)")
 with st.expander("📖 Hướng dẫn sử dụng hệ thống", expanded=False):
     st.markdown("""
     1. **Sử dụng GPS:** Bấm nút *Định vị tự động* để hệ thống tự tìm vị trí của bạn (Khuyên dùng trên thiết bị di động).
