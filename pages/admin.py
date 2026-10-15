@@ -12,7 +12,7 @@ ADMIN_PASSWORD = "123"
 if 'is_admin' not in st.session_state:
     st.session_state['is_admin'] = False
 
-st.title("📊 Hệ thống Quản trị Báo cáo Đô thị (CMS)")
+st.title("📊 Hệ thống Quản trị Báo cáo (CMS)")
 
 if not st.session_state['is_admin']:
     col1, col2, col3 = st.columns([1, 2, 1])
